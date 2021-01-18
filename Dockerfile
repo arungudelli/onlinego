@@ -6,8 +6,13 @@ FROM debian:buster AS go-faketime
 LABEL maintainer="golang-dev@googlegroups.com"
 
 ENV BUILD_DEPS 'curl git gcc patch libc6-dev ca-certificates'
-RUN apt-get update && apt-get install -y ${BUILD_DEPS} --no-install-recommends
-
+RUN apt-get update && \
+  apt-get install -y --no-install-recommends \
+  g++ \
+  gcc \
+  libc6-dev \
+  make \
+  && rm -rf /var/lib/apt/lists/*
 ENV GOPATH /go
 ENV PATH /usr/local/go/bin:$GOPATH/bin:$PATH
 ENV GO_BOOTSTRAP_VERSION go1.14.1
